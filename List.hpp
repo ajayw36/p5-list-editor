@@ -57,6 +57,43 @@ public:
   // will work correctly without defining these, you should omit them. A user
   // of the class must be able to create, copy, assign, and destroy Lists.
 
+  bool empty() const {
+    return !first;
+  }
+
+  int size() const {
+    return last - first;
+  }
+
+  T & front() {
+    return first;
+  }
+
+  T & back() {
+    return last;
+  }
+
+  void push_front(const T &datum) {
+
+  }
+
+  void push_back(const T &datum) {
+
+  }
+
+  void pop_front() {
+
+  }
+
+  void pop_back() {
+
+  }
+
+  void clear() {
+    
+  }
+
+
 private:
   //a private type
   struct Node {
