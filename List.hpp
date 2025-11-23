@@ -74,23 +74,35 @@ public:
   }
 
   void push_front(const T &datum) {
-
+    new_node = new Node(datum);
+    new_node.next = first;
+    first = &new_node;
   }
 
   void push_back(const T &datum) {
-
+    new_node = new Node(datum);
+    last->next = &new_node;
+    last = &new_node;
   }
 
   void pop_front() {
-
+    temp = first->next;
+    delete first;
+    first = temp;
   }
 
   void pop_back() {
-
+    temp = last->prev;
+    delete last;
+    last = temp;
   }
 
   void clear() {
-    
+    while (first) {
+      temp = first->next;
+      delete first;
+      first = temp;
+    }
   }
 
 
