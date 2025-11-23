@@ -17,93 +17,75 @@ class List {
 public:
 
   //EFFECTS:  returns true if the list is empty
-  bool empty() const;
+  bool empty() const {
+    return !first;
+  }
 
   //EFFECTS: returns the number of elements in this List
   //HINT:    Traversing a list is really slow. Instead, keep track of the size
   //         with a private member variable. That's how std::list does it.
-  int size() const;
+  int size() const {
+    return last - first;
+  }
 
   //REQUIRES: list is not empty
   //EFFECTS: Returns the first element in the list by reference
-  T & front();
+  T & front() {
+    return first;
+  }
 
   //REQUIRES: list is not empty
   //EFFECTS: Returns the last element in the list by reference
-  T & back();
+  T & back() {
+    return last;
+  }
 
   //EFFECTS:  inserts datum into the front of the list
-  void push_front(const T &datum);
+  void push_front(const T &datum) {
+    Node* new_node = new Node(datum);
+    new_node->next = first;
+    first = &new_node;
+  }
 
   //EFFECTS:  inserts datum into the back of the list
-  void push_back(const T &datum);
+  void push_back(const T &datum) {
+    Node* new_node = new Node(datum);
+    last->next = new_node;
+    last = new_node;
+  }
 
   //REQUIRES: list is not empty
   //MODIFIES: invalidates all iterators to the removed element
   //EFFECTS:  removes the item at the front of the list
-  void pop_front();
+  void pop_front() {
+    Node* temp = first->next;
+    delete first;
+    first = temp;
+  }
 
   //REQUIRES: list is not empty
   //MODIFIES: invalidates all iterators to the removed element
   //EFFECTS:  removes the item at the back of the list
-  void pop_back();
+  void pop_back() {
+    Node* temp = last->prev;
+    delete last;
+    last = temp;
+  }
 
   //MODIFIES: invalidates all iterators to the removed elements
   //EFFECTS:  removes all items from the list
-  void clear();
+  void clear() {
+    while (first) {
+      Node* temp = first->next;
+      delete first;
+      first = temp;
+    }
+  }
 
   // You should add in a default constructor, destructor, copy constructor,
   // and overloaded assignment operator, if appropriate. If these operations
   // will work correctly without defining these, you should omit them. A user
   // of the class must be able to create, copy, assign, and destroy Lists.
-
-  bool empty() const {
-    return !first;
-  }
-
-  int size() const {
-    return last - first;
-  }
-
-  T & front() {
-    return first;
-  }
-
-  T & back() {
-    return last;
-  }
-
-  void push_front(const T &datum) {
-    new_node = new Node(datum);
-    new_node.next = first;
-    first = &new_node;
-  }
-
-  void push_back(const T &datum) {
-    new_node = new Node(datum);
-    last->next = &new_node;
-    last = &new_node;
-  }
-
-  void pop_front() {
-    temp = first->next;
-    delete first;
-    first = temp;
-  }
-
-  void pop_back() {
-    temp = last->prev;
-    delete last;
-    last = temp;
-  }
-
-  void clear() {
-    while (first) {
-      temp = first->next;
-      delete first;
-      first = temp;
-    }
-  }
 
 
 private:
