@@ -7,12 +7,10 @@ bool TextBuffer::forward() {
     if (cursor == data.end()) {
         return false;
     }
+    char current_char = *cursor;
     ++cursor;
     ++index;
-    if (cursor == data.end()) {
-        return true;
-    }
-    if (*cursor == '\n') {
+    if (current_char == '\n') {
         ++row;
         column = 0;
     }
@@ -73,6 +71,9 @@ void TextBuffer::move_to_row_start() {
 void TextBuffer::move_to_row_end() {
     while (cursor != data.end() && *cursor != '\n') {
         forward();
+    }
+    if (cursor == data.end()) {
+        column = compute_column();
     }
 }
 
@@ -136,11 +137,21 @@ int TextBuffer::size() const {
 }
 
 std::string TextBuffer::stringify() const {
-
+    return std::string(data.begin(), data.end());
 }
 
 int TextBuffer::compute_column() const {
-
+    Iterator it = cursor;
+    int col = 0;
+    
+    while (it != data.begin()) {
+        --it;
+        if (*it == '\n') {
+            return col;
+        }
+        ++col;
+    }
+    return col;
 }
 
 
