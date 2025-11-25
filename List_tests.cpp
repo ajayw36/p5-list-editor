@@ -204,4 +204,19 @@ TEST (test_assignment_operator) {
     ASSERT_EQUAL(*it1, 4);
     ASSERT_EQUAL(*it2, 3);
 }
+
+TEST (test_self_assignment) {
+    List<int> l1;
+    for (int i = 1; i < 4; ++i) {
+        l1.push_back(i);
+    }
+    List<int>& l2 = l1;
+    l2 = l1;
+
+    ASSERT_EQUAL(l1.size(), l2.size());
+    ASSERT_TRUE(l1.begin() == l2.begin());
+    ASSERT_TRUE(l1.end() == l2.end());
+
+}
+
 TEST_MAIN()

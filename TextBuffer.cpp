@@ -54,7 +54,6 @@ bool TextBuffer::remove() {
     }
     if (*cursor == '\n') {
         column = compute_column();
-        --row;
     }
     cursor = data.erase(cursor);
     return true;
