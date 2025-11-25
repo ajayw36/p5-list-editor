@@ -219,4 +219,66 @@ TEST (test_self_assignment) {
 
 }
 
+TEST (test_empty_assignment) {
+    List<int> l1;
+    List<int> l2;
+    for (int i = 1; i < 4; ++i) {
+        l1.push_back(i);
+    }
+    l1 = l2;
+
+    ASSERT_TRUE(l1.empty());
+    l1.push_back(1);
+    ASSERT_TRUE(l2.empty());
+
+    List<int> l3;
+    List<int> l4;
+    for (int i = 1; i < 4; ++i) {
+        l3.push_back(i);
+    }
+    l4 = l3;
+    
+    auto it1 = l3.begin();
+    auto it2 = l4.begin();
+
+    for (; it1 != l3.end(); ++it1, ++it2) {
+        ASSERT_EQUAL(*it1, *it2);
+    }
+
+    --it1;
+    --it2;
+
+    *it1 = 4;
+
+    ASSERT_EQUAL(*it1, 4);
+    ASSERT_EQUAL(*it2, 3);
+}
+
+TEST (test_smaller_to_larger) {
+    List<int> l1;
+    for (int i = 1; i < 4; ++i) {
+        l1.push_back(i);
+    }
+    List<int> l2;
+    l2.push_back(1);
+    l1 = l2;
+
+    ASSERT_EQUAL(l1.size(), l2.size());
+
+    auto it1 = l1.begin();
+    auto it2 = l2.begin();
+
+    for (; it1 != l1.end(); ++it1, ++it2) {
+        ASSERT_EQUAL(*it1, *it2);
+    }
+
+    --it1;
+    --it2;
+
+    *it1 = 4;
+
+    ASSERT_EQUAL(*it1, 4);
+    ASSERT_EQUAL(*it2, 1);
+}
+
 TEST_MAIN()
