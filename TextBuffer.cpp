@@ -57,8 +57,6 @@ bool TextBuffer::remove() {
         --row;
     }
     cursor = data.erase(cursor);
-    --index;
-
     return true;
 }
 
