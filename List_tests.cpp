@@ -93,6 +93,7 @@ TEST(test_iterator_begin_and_end) {
     auto it = l.begin();
     ++it;
     ++it;
+    ++it;
     ASSERT_TRUE(it == l.end());
 }
 
@@ -136,7 +137,71 @@ TEST(test_erase) {
 }
 
 TEST(test_insert) {
-    
+    List<int> l;
+    auto it = l.begin();
+    it = l.insert(it, 1);
+    ASSERT_EQUAL(*it, 1);
+    it = l.insert(it, 2);
+    ASSERT_EQUAL(*it, 2)
+    ASSERT_TRUE(l.begin() == it);
+    ++it;
+    ASSERT_EQUAL(*it, 1);
+    it = l.end();
+    l.insert(it, 3);
+    ASSERT_TRUE(it == l.end());
+    --it;
+    ASSERT_EQUAL(*it, 3);
 }
 
+TEST(test_copy_constructor) {
+    List<int> l1;
+    for (int i = 1; i < 4; ++i) {
+        l1.push_back(i);
+    }
+    List<int>l2(l1);
+
+    ASSERT_EQUAL(l1.size(), l2.size());
+
+    auto it1 = l1.begin();
+    auto it2 = l2.begin();
+
+    for (; it1 != l1.end(); ++it1, ++it2) {
+        ASSERT_EQUAL(*it1, *it2);
+    }
+
+    --it1;
+    --it2;
+
+    *it1 = 4;
+
+    ASSERT_EQUAL(*it1, 4);
+    ASSERT_EQUAL(*it2, 3);
+}
+
+TEST (test_assignment_operator) {
+    List<int> l1;
+    for (int i = 1; i < 4; ++i) {
+        l1.push_back(i);
+    }
+    List<int>l2;
+    l2.push_back(2);
+    l2 = l1;
+
+    ASSERT_EQUAL(l1.size(), l2.size());
+
+    auto it1 = l1.begin();
+    auto it2 = l2.begin();
+
+    for (; it1 != l1.end(); ++it1, ++it2) {
+        ASSERT_EQUAL(*it1, *it2);
+    }
+
+    --it1;
+    --it2;
+
+    *it1 = 4;
+
+    ASSERT_EQUAL(*it1, 4);
+    ASSERT_EQUAL(*it2, 3);
+}
 TEST_MAIN()
