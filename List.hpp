@@ -18,7 +18,7 @@ public:
 
   //EFFECTS:  returns true if the list is empty
   bool empty() const {
-    return !first;
+    return first == nullptr && last == nullptr;
   }
 
   //EFFECTS: returns the number of elements in this List
